@@ -107,4 +107,13 @@ target_link_libraries(bag_manual_synchronizer PRIVATE
 
 install(TARGETS bag_manual_synchronizer DESTINATION lib/${PROJECT_NAME})
 
+# Also expose the executable under the standard bin/ directory. The rule
+# above is the ROS/ament convention and is what makes
+# `ros2 run bag_manual_synchronizer bag_manual_synchronizer` work once this
+# package is built inside a colcon workspace; this second copy is for a
+# plain, non-colcon `cmake --install build`, so the tool lands on PATH like
+# any other installed command-line program. See README "Installing".
+include(GNUInstallDirs)
+install(TARGETS bag_manual_synchronizer RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+
 ament_package()

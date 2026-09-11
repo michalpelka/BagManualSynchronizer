@@ -36,6 +36,30 @@ cmake -S . -B build \
   -DIMPLOT_SOURCE_DIR=/path/to/implot
 ```
 
+## Installing
+
+Outside of a colcon workspace, `cmake --install` puts the executable in the
+usual place for the chosen prefix (`bin/`, so `/usr/local/bin` by default),
+putting it on `PATH`:
+
+```bash
+cmake --build build -j
+sudo cmake --install build          # or -DCMAKE_INSTALL_PREFIX=~/.local, etc.
+
+bag_manual_synchronizer /path/to/bag_a /path/to/bag_b
+```
+
+The same build also installs a copy under `lib/bag_manual_synchronizer/`,
+which is the layout `colcon build` / `ros2 run bag_manual_synchronizer
+bag_manual_synchronizer` expect; both come from the same `cmake --install`.
+
+Either way, the ROS 2 environment still has to be sourced (`source
+/opt/ros/jazzy/setup.bash`) **at run time**, not just at build time: the
+executable finds `librclcpp` etc. through an rpath baked in at build time,
+but rosbag2's sqlite3/mcap storage plugins are looked up through pluginlib
+via `AMENT_PREFIX_PATH`, and that only exists once the environment is
+sourced. Without it, both bags will fail to open.
+
 ## Running
 
 ```bash
