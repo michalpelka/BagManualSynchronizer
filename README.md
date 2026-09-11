@@ -1,4 +1,5 @@
 # bag_manual_synchronizer
+<img width="3773" height="2102" alt="image" src="https://github.com/user-attachments/assets/e6ed38e1-b52b-48cb-9596-691a3d123da6" />
 
 A small C++/OpenGL tool for finding the time offset between two ROS 2 bags by
 eye: it overlays their IMU streams on two ImPlot plots, lets you slide one bag
